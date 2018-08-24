@@ -43,6 +43,5 @@ resource "google_storage_bucket_iam_member" "bucket_iam_service_account_tf_admin
 resource "google_project_iam_binding" "project_iam_service_account_tf_admin" {
   project = "${local.project_id}"
   role    = "roles/editor"
-i  member = "${format("%s:%s@%s.iam.gserviceaccount.com", "serviceAccount", google_service_account.service_account_tf_admin.account_id, local.project_id)}"
+  member  = "${format("%s:%s@%s.iam.gserviceaccount.com", "serviceAccount", google_service_account.service_account_tf_admin.account_id, local.project_id)}"
 }
-
