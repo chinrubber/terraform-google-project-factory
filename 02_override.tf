@@ -25,7 +25,7 @@ resource "google_storage_bucket" "bucket_tf_state" {
 /* A GCP IAM Service Account used by TF for making changes in the Project */
 
 resource "google_service_account" "service_account_tf_admin" {
-  account_id   = "${format("%s-%s", "tf", local.project.id)}"
+  account_id   = "${format("%s-%s", "tf", local.project_id)}"
   display_name = "${var.name} Project Service Account"
   project      = "${local.project_id}"
 }
