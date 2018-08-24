@@ -36,9 +36,13 @@ resource "google_storage_bucket_iam_member" "bucket_iam_service_account_tf_admin
   bucket = "${google_storage_bucket.bucket_tf_state.name}"
   role   = "roles/storage.admin"
   member = "${format("%s:%s@%s.iam.gserviceaccount.com", "serviceAccount", google_service_account.service_account_tf_admin.account_id, local.project_id)}"
-
-  depends_on = ["google_service_account.service_account_tf_admin"]
 }
 
 /* A GCP IAM Entry on the Project permitting editor access to the Service Account */
+
+resource "google_project_iam_binding" "project_iam_service_account_tf_admin" {
+  project = "${local.project_id}"
+  role    = "roles/editor"
+i  member = "${format("%s:%s@%s.iam.gserviceaccount.com", "serviceAccount", google_service_account.service_account_tf_admin.account_id, local.project_id)}"
+}
 
