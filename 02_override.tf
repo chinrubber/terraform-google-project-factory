@@ -24,6 +24,21 @@ resource "google_storage_bucket" "bucket_tf_state" {
 
 /* A GCP IAM Service Account used by TF for making changes in the Project */
 
-
 /* A GCP IAM Entry on the GCS Bucket permitting write access to the Service Account */
 
+/* Override project to accept new admin_project variable */
+
+resource "google_project" "project" {
+  name                = "${var.name}"
+  project_id          = "${local.temp_project_id}"
+  org_id              = "${local.project_org_id}"
+  folder_id           = "${local.project_folder_id}"
+  billing_account     = "${var.billing_account}"
+  auto_create_network = "${var.auto_create_network}"
+
+  labels = "${var.labels}"
+
+  app_engine = "${local.app_engine_config["${local.app_engine_enabled ? "enabled" : "disabled"}"]}"
+
+  admin_project = "${var.admin_project}"
+}
