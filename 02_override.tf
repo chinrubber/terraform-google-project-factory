@@ -25,7 +25,7 @@ resource "google_storage_bucket" "bucket_tf_state" {
 /* A GCP IAM Service Account used by TF for making changes in the Project */
 
 resource "google_service_account" "service_account_tf_admin" {
-  account_id   = "${format("%s-%s", "tf", local.project_id)}"
+  account_id   = "${format("%s-%s", var.name, "tf")}"
   display_name = "${var.name} Project Service Account"
   project      = "${local.project_id}"
 }
@@ -35,7 +35,7 @@ resource "google_service_account" "service_account_tf_admin" {
 resource "google_storage_bucket_iam_member" "bucket_iam_service_account_tf_admin" {
   bucket = "${google_storage_bucket.bucket_tf_state.name}"
   role   = "roles/storage.admin"
-  member = "${format("%s:%s", "serviceAccount", google_service_account.service_account_tf_admin.email)}"
+  member = "${format("%s:%s@%s.iam.gserviceaccount.com", "serviceAccount", google_service_account.service_account_tf_admin.account_id, local.project_id)}"
 
   depends_on = ["google_service_account.service_account_tf_admin"]
 }
