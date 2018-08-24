@@ -1,3 +1,10 @@
+/* Override for demo purposes */
+
+variable "auto_create_network" {
+  description = "Create the default network"
+  default     = "true"
+}
+
 /* The admin project id used to the Project TF State Bucket and Service Account */
 
 variable "admin_project" {}
