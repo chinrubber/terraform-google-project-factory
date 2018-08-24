@@ -13,7 +13,7 @@ resource "random_id" "random_bucket_tf_state_id" {
 resource "google_storage_bucket" "bucket_tf_state" {
   name          = "${random_id.random_bucket_tf_state_id.hex}"
   location      = "europe-west2"
-  storage-class = "REGIONAL"
+  storage_class = "REGIONAL"
   force_destroy = true
   project       = "${var.admin_project}"
 
