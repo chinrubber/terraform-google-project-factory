@@ -45,15 +45,3 @@ resource "google_project_iam_member" "project_iam_service_account_tf_admin" {
   role    = "roles/editor"
   member  = "${format("%s:%s@%s.iam.gserviceaccount.com", "serviceAccount", google_service_account.service_account_tf_admin.account_id, var.admin_project)}"
 }
-
-/* A GCP IAM Entry on the shared subnets in the xpn vpc */
-
-resource "google_compute_subnetwork_iam_member" "subnet_iam_service_account_tf_admin" {
-  subnetwork = "${element(split("/", var.shared_vpc_subnets[count.index]), 5)}"
-  role       = "roles/compute.networkUser"
-  region     = "${element(split("/", var.shared_vpc_subnets[count.index]), 3)}"
-  project    = "${var.shared_vpc}"
-  member     = "${format("%s:%s@%s.iam.gserviceaccount.com", "serviceAccount", google_service_account.service_account_tf_admin.account_id, var.admin_project)}"
-
-  depends_on = ["google_project_service.project_services"]
-}
