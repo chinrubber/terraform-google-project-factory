@@ -3,6 +3,8 @@ set -e
 PROJECT_ID=$1
 SA_ID=$2
 
+echo "Trying to delete service account: $SA_ID"
+
 SA_LIST=$(gcloud --project="$PROJECT_ID" iam service-accounts list || exit 1)
 
 if [[ $SA_LIST = *"$SA_ID"* ]]; then
